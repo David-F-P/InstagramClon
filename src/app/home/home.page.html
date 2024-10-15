@@ -1,20 +1,80 @@
-<ion-header [translucent]="true">
+<!-- Barra de navegación -->
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="center-title">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/120px-Instagram_logo_2022.svg.png" alt="Instagram Logo" class="logo">
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="bookmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content>
+  <!-- Historias -->
+  <div class="stories-container">
+    <div class="story" *ngFor="let story of stories">
+      <ion-thumbnail class="story-avatar-thumbnail">
+        <img [src]="story.avatar" class="story-avatar">
+      </ion-thumbnail>
+      <p class="story-username">{{ story.username }}</p>
+    </div>
   </div>
+
+  <!-- Publicaciones del feed -->
+  <div class="feed">
+    <ion-card *ngFor="let post of posts" class="feed-card">
+      <!-- Cabecera de la publicación -->
+      <ion-item lines="none">
+        <ion-thumbnail slot="start" class="feed-avatar">
+          <img [src]="post.avatar">
+        </ion-thumbnail>
+        <ion-label>{{ post.username }}</ion-label>
+        <ion-icon name="ellipsis-horizontal" slot="end"></ion-icon>
+      </ion-item>
+      
+      <!-- Imagen de la publicación -->
+      <img [src]="post.image" class="feed-image">
+      
+      <!-- Acciones de la publicación -->
+      <div class="post-actions">
+        <div class="left-icons">
+          <ion-button fill="clear">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear">
+            <ion-icon name="paper-plane-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <ion-button fill="clear" slot="end">
+          <ion-icon name="bookmark-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- Contenido de la publicación -->
+      <ion-card-content>
+        <p>{{ post.content }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Publicar nuevo contenido -->
+  <ion-item class="new-post-item">
+    <ion-input [(ngModel)]="newPostContent" placeholder="Escribe una publicación..."></ion-input>
+    <ion-button (click)="addPost()">Publicar</ion-button>
+  </ion-item>
 </ion-content>
